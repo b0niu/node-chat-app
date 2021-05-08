@@ -15,7 +15,7 @@ pipeline {
       always {
          echo 'Finish'
       }
-      Sucess {
+      success {
          echo 'Everything OK'
          emailext attachLog: true,
              body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
