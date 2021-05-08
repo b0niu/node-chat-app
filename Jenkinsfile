@@ -17,12 +17,12 @@ pipeline {
       Sucess {
          echo 'Everything OK'
          emailext attachLog: true,
-             to: mateo7413@gmail.com, subject: 'Test failed!!!'
+             to: mateo7413@gmail.com, 
              subject: "Jenkinsfile test succeed!!"
       }
       failure {
           emailext attachLog: true,
-             to: mateo7413@gmail.com, subject: 'Test failed!!!'
+             to: mateo7413@gmail.com, 
              subject: "Jenkinsfile test failed!!"
       }    
     }           
