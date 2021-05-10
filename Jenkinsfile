@@ -2,10 +2,23 @@ pipeline {
     agent any
         tools {nodejs "NodeJS"}
     stages {
+	stage('Build') {
+	    steps {
+	       echo 'Run building'
+	       sh 'npm install'
+	       
+	    }
+	}
+    }
+    stages {
 	stage('Test') {
+	    when {
+	       expression {
+	          currentBuild.currentResult == null || currentBuild.currentResult == 'SUCCESS'
+	          }
+	       }
 	    steps {
 	       echo 'Run testing'
-	       sh 'npm install'
 	       sh 'npm run test'
 	       
 	    }
@@ -20,13 +33,13 @@ pipeline {
          emailext attachLog: true,
              body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
              to: 'mateo7413@gmail.com', 
-             subject: "Jenkinsfile test succeed!!"
+             subject: "Jenkinsfile build and test succeed!! "
       }
       failure {
           emailext attachLog: true,
              body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
              to: 'mateo7413@gmail.com', 
-             subject: "Jenkinsfile test failed!!"
+             subject: "Jenkinsfile failed!!"
       }    
     }           
 }
