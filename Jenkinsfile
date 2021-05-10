@@ -8,9 +8,7 @@ pipeline {
 	       sh 'npm install'
 	       
 	    }
-	}
-    
-    stages {
+	}   
 	stage('Test') {
 	    when {
 	       expression {
@@ -23,7 +21,6 @@ pipeline {
 	       
 	    }
 	}
-    }
     }
     post {
       always {
