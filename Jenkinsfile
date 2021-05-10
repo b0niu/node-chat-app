@@ -9,7 +9,7 @@ pipeline {
 	       
 	    }
 	}
-    }
+    
     stages {
 	stage('Test') {
 	    when {
@@ -23,6 +23,7 @@ pipeline {
 	       
 	    }
 	}
+    }
     }
     post {
       always {
