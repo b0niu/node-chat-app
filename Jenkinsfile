@@ -8,7 +8,6 @@ pipeline {
 	       sh 'npm install'
 	       
 	    }
-	}
 	post {
                 success {
                   emailext attachLog: true,
@@ -22,7 +21,8 @@ pipeline {
                       to: 'mateo7413@gmail.com', 
                       subject: "Build failed!!"
                }    
-           }            
+           }
+        }            
 	stage('Test') {
 	    when {
 	       expression {
