@@ -8,7 +8,21 @@ pipeline {
 	       sh 'npm install'
 	       
 	    }
-	}   
+	}
+	post {
+                success {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Build  succeed!! "
+               }
+               failure {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Build failed!!"
+               }    
+           }            
 	stage('Test') {
 	    when {
 	       expression {
@@ -20,24 +34,47 @@ pipeline {
 	       sh 'npm run test'
 	       
 	    }
+            post {
+                success {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Test succeed!! "
+               }
+               failure {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Test failed!!"
+               }    
+           }           
+	}
+	stage('Deploy') {
+	    when {
+	       expression {
+	          currentBuild.currentResult == null || currentBuild.currentResult == 'SUCCESS'
+	          }
+	       }
+	    steps {
+	       echo 'Deploy'
+	       sh 'docker build -t app-chat -f Dockerfile_app'
+	       
+	    }
+	post {
+                success {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Deploy succeed!! "
+               }
+               failure {
+                  emailext attachLog: true,
+                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      to: 'mateo7413@gmail.com', 
+                      subject: "Deploy failed!!"
+               }    
+           }         
 	}
     }
-    post {
-      always {
-         echo 'Finish'
-      }
-      success {
-         echo 'Everything OK'
-         emailext attachLog: true,
-             body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
-             to: 'mateo7413@gmail.com', 
-             subject: "Jenkinsfile build and test succeed!! "
-      }
-      failure {
-          emailext attachLog: true,
-             body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
-             to: 'mateo7413@gmail.com', 
-             subject: "Jenkinsfile failed!!"
-      }    
-    }           
+    
 }
