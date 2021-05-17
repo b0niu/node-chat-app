@@ -11,7 +11,7 @@ pipeline {
 	post {
                 success {
                   emailext attachLog: true,
-                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      body: "Build OK",
                       to: 'mateo7413@gmail.com', 
                       subject: "Build  succeed!! "
                }
@@ -37,7 +37,7 @@ pipeline {
             post {
                 success {
                   emailext attachLog: true,
-                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      body: "Test OK",
                       to: 'mateo7413@gmail.com', 
                       subject: "Test succeed!! "
                }
@@ -63,7 +63,7 @@ pipeline {
 	post {
                 success {
                   emailext attachLog: true,
-                      body: "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
+                      body: "Deploy OK. Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}: ${currentBuild.currentResult}",
                       to: 'mateo7413@gmail.com', 
                       subject: "Deploy succeed!! "
                }
