@@ -58,7 +58,7 @@ pipeline {
 	    steps {
 	       echo 'Deploy...'
 	       sh 'docker build -t app-chat -f Dockerfile_app .'
-	       sh 'docker push b0niu/app-chat
+	       sh 'docker push b0niu/app-chat'
 	       
 	    }
 	post {
